@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhận đơn gửi</title>
+</head>
+<body>
+    <span>
+        <label for="name">Tên:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="phoneNumber">Số điện thoại:</label><br>
+        <input type="text" id="phoneNumber" name="phoneNumber"><br>
+        <label for="address">Địa Chỉ người nhận:</label><br>
+        <input type="text" id="address" name="address"><br>
+        <input type="submit" id="submit">
+    </span>
+
+    <div id="state"></div>
+
+    <script>
+        document.getElementById("submit").addEventListener('click', submitFunction);
+        function submitFunction() {
+            var name = document.getElementById('name').value;
+            var phoneNumber = document.getElementById('phoneNumber').value;
+            var address = document.getElementById('address').value;
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("state").innerHTML = xhttp.responseText;
+                }
+            };
+            console.log(name);
+            xhttp.open("GET", "addParcel.php?name=" + name +"&phoneNumber=" + phoneNumber + "&address=" + address, true);
+            xhttp.send();
+        }
+            
+    </script>
+</body>
+</html>

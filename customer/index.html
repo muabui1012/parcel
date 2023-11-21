@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span><input id="codeInput" type="text" placeholder="Mã đơn hàng"></input></span>
+    <input id="searchButton" type="submit" value="Submit"></input>
+    <p>Đơn hàng của bạn: <span id="parcel"></span></p>
+    <script>
+        document.getElementById('searchButton').addEventListener('click', myFunction);
+        function myFunction() {
+            var str = document.getElementById('codeInput').value;
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("parcel").innerHTML = xhttp.responseText;
+                }
+            };
+            console.log(str);
+            xhttp.open("GET", "getParcel.php?q=" + str, true);
+            xhttp.send();
+        }
+
+    </script>
+
+</body>
+
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý đơn gửi</title>
+</head>
+<body>
+    <h1>Quản lý đơn gửi</h1>
+    <button id="load">Load</button>
+    <table>
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        //setInterval(myFunction, 10);
+        document.getElementById("load").addEventListener('click', myFunction);
+        function myFunction() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    //document.getElementById("list").innerHTML = xhttp.responseText;
+                    const obj = JSON.parse(xhttp.responseText);
+                    const column = obj.keys(Data[0]);
+                    const head = document.querySelector('thead');
+					let tags = "<tr>";
+                    for (var i = 0; i < column.length; i++) {
+                        tags += `<th>${column[i]}<th>`;
+                    }		
+                    tags += "</tr";
+                    head.innerHTML = tags;
+							
+						
+                    
+                }
+            };
+            xhttp.open("GET", "getParcelList.php", true);
+            xhttp.send();
+        }
+        
+    </script>
+</body>
+</html>

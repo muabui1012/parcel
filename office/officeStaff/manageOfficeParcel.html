@@ -8,11 +8,18 @@
 <body>
     <h1>Quản lý đơn gửi</h1>
     <button id="load">Load</button>
-    <table>
-        <thead></thead>
-        <tbody></tbody>
+    
+    <table id="demo" border="1">
+        <tr>
+            <td>Product ID</td>
+            <td>Status</td>
+            <td>wid</td>
+            <td>oid</td>
+            <td>Tên</td>
+            <td>Số Điện Thoại</td>
+            <td>Địa Chỉ</td>
+        </tr>
     </table>
-
     <script>
         //setInterval(myFunction, 10);
         document.getElementById("load").addEventListener('click', myFunction);
@@ -21,18 +28,17 @@
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     //document.getElementById("list").innerHTML = xhttp.responseText;
+                    var text;
                     const obj = JSON.parse(xhttp.responseText);
-                    const column = obj.keys(Data[0]);
-                    const head = document.querySelector('thead');
-					let tags = "<tr>";
-                    for (var i = 0; i < column.length; i++) {
-                        tags += `<th>${column[i]}<th>`;
-                    }		
-                    tags += "</tr";
-                    head.innerHTML = tags;
-							
-						
-                    
+                    for (let x in obj) {
+                        //text += "<tr><td>" + obj[x][0] + "</td></tr>";
+                        text += "<tr>";
+                        for (var j = 0; j < obj[x].length; j++) {
+                            text += "<td>" + obj[x][j] + "</td>";
+                        }
+                        text += "/<tr>";
+                    }
+                    document.getElementById("demo").innerHTML += text;
                 }
             };
             xhttp.open("GET", "getParcelList.php", true);

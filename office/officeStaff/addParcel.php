@@ -4,7 +4,7 @@
     $name = $_REQUEST["name"];
     $phoneNumber = $_REQUEST["phoneNumber"];
     $address = $_REQUEST["address"];
-    $sql = "insert into parcel(name, phoneNumber, address) values('$name','$phoneNumber', '$address');";
+    $sql = "insert into parcel(name, phoneNumber, address, status) values('$name','$phoneNumber', '$address', 'đã tiếp nhận');";
     //$result = mysqli_query($conn, $sql);
     if ($conn->query($sql) === TRUE) {
       $last_id = $conn->insert_id;

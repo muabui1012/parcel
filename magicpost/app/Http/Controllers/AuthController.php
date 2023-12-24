@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -14,7 +17,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
     /**
@@ -81,6 +84,31 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Create new user 
+     */
 
+    public function register(Request $request) {
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|confirmed|min:6',
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors(),
+            ], 400);
+        } else {
+            $user = User::create(array_merge(
+                $validator->validated(), 
+                ['password'=>bcrypt($request->password)] 
+            ));
+        }
+        return response()->json([
+            'message' => "user succesfully registered", 
+            'user' => $user
+        ], 201);
+    }
 
 }

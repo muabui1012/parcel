@@ -10,7 +10,15 @@ use Illuminate\Support\Facades\Validator;
 
 class ParcelController extends Controller
 {
-    
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['show', 'findByCode']]);
+    }
     //get
     public function index() {
         $parcel = Parcel::all();
@@ -113,6 +121,7 @@ class ParcelController extends Controller
     }
 
 
+
     //update
     public function update(Request $request, int $id) {
         $validator = Validator::make($request->all(), [
@@ -135,7 +144,6 @@ class ParcelController extends Controller
             ], 422);
         } else {
                 $backup = Parcel::find($id);
-
                 $officeID = isset($request->officeID) ? $request->officeID : $backup->officeID;
                 $senderName= isset($request->senderName) ? $request->senderName : $backup->senderName;
                 $senderPhone = isset($request->senderPhone) ? $request->senderPhone : $backup->senderPhone;
@@ -193,6 +201,27 @@ class ParcelController extends Controller
             ], 404);
         }
 
+    }
+
+    //Tra cứu 
+    public function findByCode($code) {
+        // $code = $request->code;
+        $code = strval($code);
+        //$code = "MGP_0_0_1";
+        $parcel = Parcel::where('code', $code)->first();
+        if ($parcel) {
+            return response()->json([
+                'status' => 200,
+                'parcel' => $parcel,
+                'code' => $code
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => "Not found",
+                'code' => $code
+            ], 404);
+        }
     }
 
 }

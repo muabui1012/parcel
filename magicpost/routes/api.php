@@ -35,6 +35,7 @@ Route::group([
     Route::post('refresh', [AuthController::class ,'refresh']);
     Route::post('me', [AuthController::class ,'me']);
     Route::post('register', [AuthController::class, 'register']);
+
 });
 
 
@@ -55,5 +56,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::put('parcel/{id}/edit', [ParcelController::class, 'update']);
     Route::get('parcel/{id}/delete', [ParcelController::class, 'destroy']);
     Route::get('user/', [UserController::class, 'idenUser']);
+    Route::get('parcel/find/{code}', [ParcelController::class, 'findByCode']);
 });
+
+Route::get('parcel/{id}', [ParcelController::class, 'show']);
 

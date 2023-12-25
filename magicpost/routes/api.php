@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Api\ParcelController;
-use App\Http\Controllers\api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\api\OfficeController;
+use App\Http\Controllers\Api\ParcelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('parcel/{id}/delete', [ParcelController::class, 'destroy']);
     Route::get('user/', [UserController::class, 'idenUser']);
     Route::get('parcel/find/{code}', [ParcelController::class, 'findByCode']);
+
+    Route::post('office', [OfficeController::class, 'store']);
+    Route::put('office/{id}/edit', [OfficeController::class, 'update']);
+    Route::put('office/delete', [OfficeController::class, 'destroy']);
 });
 
 Route::get('parcel/{id}', [ParcelController::class, 'show']);

@@ -10,9 +10,13 @@ class Office extends Model
     use HasFactory;
     protected $table = 'office';
 
+
+    //nhận từ khách -> parcelist -> gửi cho warehouse(outgoingcomingFromWarehouse)
+    //nhận từ warehouse(incomingfromwarehouse) 
     protected $fillable=[
+        'name',
         'managerid',
-        'parceList',
+        'incomingFromCustomer',
         'incomingFromWarehouse',
         'outgoingToWarehouse',
         'outgoingToCustomer'

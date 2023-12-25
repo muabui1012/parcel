@@ -15,12 +15,13 @@ return new class extends Migration
     {
         Schema::create('office', function (Blueprint $table) {
             $table->id();
-            $table->string('managerid')->nullable();
-            $table->string('parceList')->nullable();
-            $table->string('incomingFromOffice')->nullable();
-            $table->string('incomingFromWarehouse')->nullable();
-            $table->string('outgoingToWarehouse')->nullable();
-            $table->string('outgoingToCustomer')->nullable();
+            $table->string("name")->nullable()->default("");
+            $table->integer('managerid')->nullable()->default("0");
+            $table->string('incomingFromCustomer')->nullable()->default("");
+            // $table->string('incomingFromOffice')->nullable();
+            $table->string('incomingFromWarehouse')->nullable()->default("");
+            $table->string('outgoingToWarehouse')->nullable()->default("");
+            $table->string('outgoingToCustomer')->nullable()->default("");
             $table->timestamps();
         });
     }

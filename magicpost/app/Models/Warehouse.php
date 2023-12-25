@@ -12,8 +12,9 @@ class Warehouse extends Model
     protected $table = 'office';
     protected $fillable=[
         'managerid',
+        'name',
         'officeID',
-        'parceList',
+        //'parceList',
         'incomingFromOffice',
         'incomingFromOtherWarehouse',
         'outgoingToOtherWarehouse',

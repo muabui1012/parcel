@@ -205,9 +205,7 @@ class ParcelController extends Controller
 
     //Tra cứu 
     public function findByCode($code) {
-        // $code = $request->code;
         $code = strval($code);
-        //$code = "MGP_0_0_1";
         $parcel = Parcel::where('code', $code)->first();
         if ($parcel) {
             return response()->json([

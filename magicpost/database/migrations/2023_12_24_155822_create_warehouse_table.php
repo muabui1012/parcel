@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('warehouse', function (Blueprint $table) {
             $table->id();
+            $table->string("name")->nullable();
             $table->integer('managerid')->nullable();
             $table->integer('officeid')->nullable();
-            $table->string('parceList')->nullable();
+            //$table->string('parceList')->nullable();
             $table->string('incomingFromOffice')->nullable();
             $table->string('incomingFromOtherWarehouse')->nullable();
             $table->string('outgoingToIOtherWarehouse')->nullable();

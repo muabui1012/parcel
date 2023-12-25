@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers;
 
-use App\Models\Office;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
-class OfficeController extends Controller
+class Warehouse extends Controller
 {
     /**
      * Create a new AuthController instance.
@@ -23,7 +21,7 @@ class OfficeController extends Controller
 
     //get all
     public function index(Request $request) {
-        $office = Office::all();
+        $office = Warehouse::all();
         if ($office->count() > 0) {
             return response()->json([
                 'status' => 200,
@@ -40,11 +38,11 @@ class OfficeController extends Controller
     //get by id
     public function show(Request $request) {
         $id = $request->id;
-        $office = Office::find($id);
-        if ($office->count() > 0) {
+        $wh = Warehouse::find($id);
+        if ($wh->count() > 0) {
             return response()->json([
                 'status' => 200,
-                'parcel' => $office
+                'parcel' => $wh
             ], 200);
         } else {
             return response()->json([
@@ -65,27 +63,27 @@ class OfficeController extends Controller
                 'error' => $validator->errors(),
             ], 400);
         } else {
-            $office = Office::create(array_merge(
+            $wh = Warehouse::create(array_merge(
                 $validator->validated(), 
             ));
         }
         return response()->json([
             'message' => "created successfully", 
-            'office' => $office
+            'office' => $wh
         ], 201);
         
     }
-    
+
 
     //delete
     public function destroy(Request $request, int $id) {
         //$id = $request->id;
-        $office = Office::find($id);
-        if ($office) {
-            $office->delete();
+        $wh = Warehouse::find($id);
+        if ($wh){
+            $wh->delete();
             return response()->json([
                 'status' => 200, 
-                'message' => "Office deleted successfully"
+                'message' => "Warehouse deleted successfully"
             ], 200);
         } else {
             return response()->json([
@@ -108,20 +106,17 @@ class OfficeController extends Controller
                 'errors' => $validator->messages()
             ], 422);
         } else {
-            $office = Office::find($id);
-            $office -> update([
+            $warehouse = Warehouse::find($id);
+            $warehouse -> update([
                 'name' => $request->name,
                 'managerid' => $request->managerid
             ]);
                 
         }
-        if ($office) {
+        if ($warehouse) {
             return response()->json([
                 'message' => "OK"
             ]);
         }
     }
-
-
-
 }

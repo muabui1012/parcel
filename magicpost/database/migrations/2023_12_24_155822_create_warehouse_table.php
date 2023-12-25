@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("name")->nullable();
             $table->integer('managerid')->nullable();
+            $table->string('staffList')->nullable()->default("");
             $table->integer('officeid')->nullable();
             //$table->string('parceList')->nullable();
             $table->string('incomingFromOffice')->nullable();

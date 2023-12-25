@@ -14,6 +14,7 @@ class Warehouse extends Model
         'managerid',
         'name',
         'officeID',
+        'staffList',
         //'parceList',
         'incomingFromOffice',
         'incomingFromOtherWarehouse',

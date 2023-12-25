@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string("name")->nullable()->default("");
             $table->integer('managerid')->nullable()->default("0");
+            $table->string('staffList')->nullable()->default("");
             $table->string('incomingFromCustomer')->nullable()->default("");
-            // $table->string('incomingFromOffice')->nullable();
             $table->string('incomingFromWarehouse')->nullable()->default("");
             $table->string('outgoingToWarehouse')->nullable()->default("");
             $table->string('outgoingToCustomer')->nullable()->default("");

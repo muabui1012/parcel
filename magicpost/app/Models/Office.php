@@ -16,6 +16,7 @@ class Office extends Model
     protected $fillable=[
         'name',
         'managerid',
+        'staffList',
         'incomingFromCustomer',
         'incomingFromWarehouse',
         'outgoingToWarehouse',

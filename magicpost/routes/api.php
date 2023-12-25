@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\OfficeController;
 use App\Http\Controllers\Api\ParcelController;
+use App\Http\Controllers\api\WarehouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +63,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('office', [OfficeController::class, 'store']);
     Route::put('office/{id}/edit', [OfficeController::class, 'update']);
     Route::put('office/delete', [OfficeController::class, 'destroy']);
+
+    Route::post('warehouse', [WarehouseController::class, 'store']);
+    Route::put('warehouse/{id}/edit', [WarehouseController::class, 'update']);
+    Route::put('warehouse/delete', [WarehouseController::class, 'destroy']);
 });
 
 Route::get('parcel/{id}', [ParcelController::class, 'show']);
-
+Route::get('parcel/find/{code}', [ParcelController::class, 'findByCode']);

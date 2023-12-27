@@ -16,8 +16,13 @@ class UserController extends Controller
         $apy = JWTAuth::getPayload($token)->toArray();
         $user = auth()->user();
         return response() ->json([
-            'token' => $apy,
             'user' => $user
         ]);
     }
+
+    public function getUser(Request $request) {
+        $user = auth()->user();
+        return $user;
+    }
+
 }

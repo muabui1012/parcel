@@ -16,14 +16,14 @@ return new class extends Migration
         Schema::create('warehouse', function (Blueprint $table) {
             $table->id();
             $table->string("name")->nullable();
-            $table->integer('managerid')->nullable();
+            $table->integer('managerid')->nullable()->default(0);
             $table->string('staffList')->nullable()->default("");
-            $table->integer('officeid')->nullable();
+            $table->integer('officeid')->nullable()->default("");
             //$table->string('parceList')->nullable();
-            $table->string('incomingFromOffice')->nullable();
-            $table->string('incomingFromOtherWarehouse')->nullable();
-            $table->string('outgoingToIOtherWarehouse')->nullable();
-            $table->string('outgoingToCustomer')->nullable();
+            $table->string('incomingFromOffice')->nullable()->default("");
+            $table->string('incomingFromOtherWarehouse')->nullable()->default("");
+            $table->string('outgoingToIOtherWarehouse')->nullable()->default("");
+            $table->string('outgoingToCustomer')->nullable()->default("");
             $table->timestamps();
         });
     }

@@ -63,6 +63,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('office', [OfficeController::class, 'store']);
     Route::put('office/{id}/edit', [OfficeController::class, 'update']);
     Route::put('office/delete', [OfficeController::class, 'destroy']);
+    Route::get('office/incomingFromCustomer', [OfficeController::class, 'getIncomingFromCustomer']);
+    Route::post('office/sendtowarehouse', [OfficeController::class, 'sendToWarehouse']);
 
     Route::post('warehouse', [WarehouseController::class, 'store']);
     Route::put('warehouse/{id}/edit', [WarehouseController::class, 'update']);

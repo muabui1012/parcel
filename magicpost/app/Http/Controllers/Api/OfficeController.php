@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\Office;
+use App\Models\Parcel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -122,6 +123,169 @@ class OfficeController extends Controller
         }
     }
 
+    public function getIncomingFromCustomer(Request $request) {
+        $id = $request->id;
+        $of = Office::find($id);
+        $jsonlist = $of->incomingFromCustomer;
+        $arr = json_decode($jsonlist);
+        $res = array();
+        for ($i = 0; $i < count($arr); $i++) {
+            $parcel = Parcel::find($arr[$i]);
+            array_push($res, $parcel);
+        }
+        //$ret = json_encode($res);
+        return response()->json([
+            'arr' => $res
+        ], 200);
+    }
 
+    public function addToIncomingFromCustomer(int $officeID, int $parcelid) {
+        $of = Office::find($officeID);
+        $jsonlist = $of->incomingFromCustomer;
+        $arr = json_decode($jsonlist);
+        array_push($arr, $parcelid);
+        $jsonarr = json_encode($arr);
+        $of->update([
+            'incomingFromCustomer' => $jsonarr
+        ]);
+    }
+
+    public function removeToIncomingFromCustomer(int $officeID, int $parcelid) {
+        $of = Office::find($officeID);
+        $jsonlist = $of->incomingFromCustomer;
+        $arr = json_decode($jsonlist);
+        unset($arr[$parcelid]);
+        $jsonarr = json_encode($arr);
+        $of->update([
+            'incomingFromCustomer' => $jsonarr
+        ]);
+    }
+
+    public function getIncomingFromWarehouse(Request $request) {
+        $id = $request->id;
+        $of = Office::find($id);
+        $jsonlist = $of->incomingFromWarehouse;
+        $arr = json_decode($jsonlist);
+        $res = array();
+        for ($i = 0; $i < count($arr); $i++) {
+            $parcel = Parcel::find($arr[$i]);
+            array_push($res, $parcel);
+        }
+        //$ret = json_encode($res);
+        return response()->json([
+            'arr' => $res
+        ], 200);
+    }
+
+    public function addToIncomingFromWarehouse(int $officeID, int $parcelid) {
+        $of = Office::find($officeID);
+        $jsonlist = $of->incomingFromWarehouse;
+        $arr = json_decode($jsonlist);
+        array_push($arr, $parcelid);
+        $jsonarr = json_encode($arr);
+        $of->update([
+            'incomingFromWarehouse' => $jsonarr
+        ]);
+    }
+
+    public function removeToIncomingWarehouse(int $officeID, int $parcelid) {
+        $of = Office::find($officeID);
+        $jsonlist = $of->incomingFromWarehouse;
+        $arr = json_decode($jsonlist);
+        unset($arr[$parcelid]);
+        $jsonarr = json_encode($arr);
+        $of->update([
+            'incomingFromWarehouse' => $jsonarr
+        ]);
+    }
+
+    public function getOutgoingFromCustomer(Request $request) {
+        $id = $request->id;
+        $of = Office::find($id);
+        $jsonlist = $of->outgoingFromCustomer;
+        $arr = json_decode($jsonlist);
+        $res = array();
+        for ($i = 0; $i < count($arr); $i++) {
+            $parcel = Parcel::find($arr[$i]);
+            array_push($res, $parcel);
+        }
+        //$ret = json_encode($res);
+        return response()->json([
+            'arr' => $res
+        ], 200);
+    }
+
+    public function addToOutgoingFromCustomer(int $officeID, int $parcelid) {
+        $of = Office::find($officeID);
+        $jsonlist = $of->outgoingFromCustomer;
+        $arr = json_decode($jsonlist);
+        array_push($arr, $parcelid);
+        $jsonarr = json_encode($arr);
+        $of->update([
+            'outgoingFromCustomer' => $jsonarr
+        ]);
+    }
+
+    public function removeOutgoingFromCustomer(int $officeID, int $parcelid) {
+        $of = Office::find($officeID);
+        $jsonlist = $of->outgoingFromCustomer;
+        $arr = json_decode($jsonlist);
+        unset($arr[$parcelid]);
+        $jsonarr = json_encode($arr);
+        $of->update([
+            'outgoingFromCustomer' => $jsonarr
+        ]);
+    }
+
+    public function getOutgoingFromWarehouse(Request $request) {
+        $id = $request->id;
+        $of = Office::find($id);
+        $jsonlist = $of->outgoingFromWarehouse;
+        $arr = json_decode($jsonlist);
+        $res = array();
+        for ($i = 0; $i < count($arr); $i++) {
+            $parcel = Parcel::find($arr[$i]);
+            array_push($res, $parcel);
+        }
+        //$ret = json_encode($res);
+        return response()->json([
+            'arr' => $res
+        ], 200);
+    }
+
+    public function addToOutgoingFromWarehouse(int $officeID, int $parcelid) {
+        $of = Office::find($officeID);
+        $jsonlist = $of->outgoingFromWarehouse;
+        $arr = json_decode($jsonlist);
+        array_push($arr, $parcelid);
+        $jsonarr = json_encode($arr);
+        $of->update([
+            'outgoingFromWarehouse' => $jsonarr
+        ]);
+    }
+
+    public function removeToOutgoingWarehouse(int $officeID, int $parcelid) {
+        $of = Office::find($officeID);
+        $jsonlist = $of->outgoingFromWarehouse;
+        $arr = json_decode($jsonlist);
+        unset($arr[$parcelid]);
+        $jsonarr = json_encode($arr);
+        $of->update([
+            'outgoingFromWarehouse' => $jsonarr
+        ]);
+    }
+
+    public function sendToWarehouse(Request $request) {
+        $officeID = $request->officeID;
+        $parcelid = $request->parcelid;
+        $whctrl = new WarehouseController();
+        $whctrl->addIncomingFromOffice($officeID, $parcelid);
+
+    }
+
+
+    
+
+   
 
 }

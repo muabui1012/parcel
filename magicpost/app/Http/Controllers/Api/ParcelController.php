@@ -39,9 +39,9 @@ class ParcelController extends Controller
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
             // 'officeID' => 'required',
-            // 'senderName' => 'required',
-            // 'senderPhone' => 'required',
-            // 'senderAddress' => 'required',
+            'senderName' => 'required|string',
+            'senderPhone' => 'required|string',
+            'senderAddress' => 'required|string',
             // 'sendOfficeID' => 'required',
             // 'receiverName' => 'required',
             // 'receiverPhone'=> 'required',
@@ -60,13 +60,16 @@ class ParcelController extends Controller
                 $senderName= isset($request->senderName) ? $request->senderName : "null";
                 $senderPhone = isset($request->senderPhone) ? $request->senderPhone : "null";
                 $senderAddress = isset($request->senderAddress) ? $request->senderAddress : "null";
-                $sendOfficeID = isset($request->sendOfficeID) ? $request->sendOfficeID : 0;
+                //$sendOfficeID = isset($request->sendOfficeID) ? $request->sendOfficeID : 0;
                 $receiverName = isset($request->recieverName) ? $request->recieverName : "null";
                 $receiverPhone = isset($request->recieverPhone) ? $request->recieverPhone : "null";
                 $receiverAddress = isset($request->recieverAddress) ? $request->recieverAddress : "null";
                 $receiveOfficeID = isset($request->receiveOfficeID) ? $request->receiveOfficeID : 0;
                 $trace = isset($request->trace) ? $request->trace : "null";
                 $status= isset($request->status) ? $request->status : "null";
+                $uctrl = new UserController();
+                $usr= $uctrl->getUser($request);
+                $sendOfficeID = $usr->departmentid;
                 $parcel = Parcel::create([
                 // 'officeID' => $officeID,
                 'senderName' => $senderName,
@@ -82,10 +85,12 @@ class ParcelController extends Controller
             ]);
 
             if ($parcel) {
-                $last = Parcel::all()->last();
-                $lastid =  $last->id;
-                $code = "MGP_" . $sendOfficeID . "_" . $receiveOfficeID .  "_" . $lastid;
-                $last -> update([
+                $id = $parcel->id;
+                $code = "MGP_" . $sendOfficeID . "_" . $receiveOfficeID .  "_" . $id;
+                
+                $ofc = new OfficeController();
+                $ofc -> addToIncomingFromCustomer($request->sendOfficeID, $id);
+                $parcel -> update([
                     'code' => $code
                 ]);
                 $msg =  "Parcel created successfully";
